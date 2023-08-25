@@ -7,6 +7,7 @@ import Login from "./components/Login"
 import Lounge from "./components/Lounge"
 import Missing from "./components/Missing"
 import Register from "./components/Register"
+import RequiredAuth from "./components/RequiredAuth"
 import Unauthorized from "./components/Unauthorized"
 import {
   RouterProvider,
@@ -14,6 +15,12 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom"
+
+const ROLES = {
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+}
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,10 +32,23 @@ const router = createBrowserRouter(
       <Route path="unauthorized" element={<Unauthorized />} />
 
       {/* Protected Routes */}
-      <Route index element={<Home />} />
-      <Route path="editor" element={<Editor />} />
-      <Route path="admin" element={<Admin />} />
-      <Route path="lounge" element={<Lounge />} />
+      <Route element={<RequiredAuth allowedRoles={[ROLES.User]} />}>
+        <Route index element={<Home />} />
+      </Route>
+
+      <Route element={<RequiredAuth allowedRoles={[ROLES.Editor]} />}>
+        <Route path="editor" element={<Editor />} />
+      </Route>
+
+      <Route element={<RequiredAuth allowedRoles={[ROLES.Admin]} />}>
+        <Route path="admin" element={<Admin />} />
+      </Route>
+
+      <Route
+        element={<RequiredAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+      >
+        <Route path="lounge" element={<Lounge />} />
+      </Route>
     </Route>
   )
 )

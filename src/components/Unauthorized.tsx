@@ -12,7 +12,7 @@ const Unauthorized = () => {
       <p>You do not have access to the requested page.</p>
       <div className="mb-4">
         <button
-          className="bg-black text-slate-300 px-2 py-2 hover:bg-gray-900 rounded-md"
+          className="bg-black text-slate-300 px-2 py-2 hover:bg-gray-900 rounded-md mt-4"
           onClick={goBack}
         >
           Go Back
