@@ -5,11 +5,12 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import axios, { AxiosError } from "axios"
+import { AxiosError } from "axios"
+import axios from "../api/axios"
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const REGISTER_URL = "http://localhost:3500/register"
+const REGISTER_URL = "/register"
 
 const Register = () => {
   const userRef = useRef<HTMLInputElement | null>(null)
@@ -79,17 +80,15 @@ const Register = () => {
       setSuccess(true)
       // clear the input fields
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const err = error as AxiosError
-        if (!err?.response) {
-          setErrMsg("No Server Response")
-        } else if (err.response?.status === 409) {
-          setErrMsg("Username Taken")
-        } else {
-          setErrMsg("Registration Failed")
-        }
-        errRef.current?.focus()
+      const err = error as AxiosError
+      if (!err?.response) {
+        setErrMsg("No Server Response")
+      } else if (err.response?.status === 409) {
+        setErrMsg("Username Taken")
+      } else {
+        setErrMsg("Registration Failed")
       }
+      errRef.current?.focus()
     }
   }
 

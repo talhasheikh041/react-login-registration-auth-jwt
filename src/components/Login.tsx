@@ -1,17 +1,18 @@
 import { useRef, useState, useEffect } from "react"
-import axios, { AxiosError } from "axios"
-import { useNavigate, Link, useLocation } from "react-router-dom"
+import { AxiosError } from "axios"
+import axios from "../api/axios"
+import { useNavigate, useLocation } from "react-router-dom"
 
 import useAuth from "../hooks/useAuth"
 
-const LOGIN_URL = "http://localhost:3500/auth"
+const LOGIN_URL = "/auth"
 
 const Login = () => {
   const { setAuth } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = location?.state?.pathname || "/"
+  const from = location?.state?.from.pathname || "/"
 
   const errRef = useRef<HTMLParagraphElement | null>(null)
   const userRef = useRef<HTMLInputElement | null>(null)
@@ -51,19 +52,17 @@ const Login = () => {
       setPwd("")
       navigate(from, { replace: true })
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const err = error as AxiosError
-        if (!err?.response) {
-          setErrMsg("No Server Response!")
-        } else if (err.response?.status === 400) {
-          setErrMsg("Missing username or password!")
-        } else if (err.response?.status === 401) {
-          setErrMsg("Unauthorized!")
-        } else {
-          setErrMsg("Login Failed")
-        }
-        errRef.current?.focus()
+      const err = error as AxiosError
+      if (!err?.response) {
+        setErrMsg("No Server Response!")
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing username or password!")
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized!")
+      } else {
+        setErrMsg("Login Failed")
       }
+      errRef.current?.focus()
     }
   }
 

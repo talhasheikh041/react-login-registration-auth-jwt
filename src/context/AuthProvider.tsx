@@ -1,10 +1,10 @@
 import { ReactElement, createContext, useState } from "react"
 
-type AuthType = {
-  user: string
-  pwd: string
-  roles: number[]
-  accessToken: string
+export type AuthType = {
+  user: string | undefined
+  pwd: string | undefined
+  roles: number[] | undefined
+  accessToken: string | undefined
 }
 
 type AuthContextType = {
