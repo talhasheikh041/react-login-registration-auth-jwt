@@ -1,15 +1,12 @@
 import { useNavigate, Link } from "react-router-dom"
-import { useContext } from "react"
-import AuthContext from "../context/AuthProvider"
+import useLogout from "../hooks/useLogout"
 
 const Home = () => {
-  const { setAuth } = useContext(AuthContext)
   const navigate = useNavigate()
+  const logout = useLogout()
 
-  const logout = async () => {
-    // if used in more components, this should be in context
-    // axios to /logout endpoint
-    setAuth(null)
+  const signOut = async () => {
+    await logout()
     navigate("/linkpage")
   }
 
@@ -29,7 +26,7 @@ const Home = () => {
       <div className="mt-4">
         <button
           className="bg-black text-slate-300 px-2 py-2 hover:bg-gray-900 rounded-md"
-          onClick={logout}
+          onClick={signOut}
         >
           Sign Out
         </button>

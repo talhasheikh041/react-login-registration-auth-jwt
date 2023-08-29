@@ -9,6 +9,7 @@ import Missing from "./components/Missing"
 import Register from "./components/Register"
 import RequiredAuth from "./components/RequiredAuth"
 import Unauthorized from "./components/Unauthorized"
+import PersistLogin from "./components/PersistLogin"
 import {
   RouterProvider,
   createBrowserRouter,
@@ -32,22 +33,24 @@ const router = createBrowserRouter(
       <Route path="unauthorized" element={<Unauthorized />} />
 
       {/* Protected Routes */}
-      <Route element={<RequiredAuth allowedRoles={[ROLES.User]} />}>
-        <Route index element={<Home />} />
-      </Route>
+      <Route element={<PersistLogin />}>
+        <Route element={<RequiredAuth allowedRoles={[ROLES.User]} />}>
+          <Route index element={<Home />} />
+        </Route>
 
-      <Route element={<RequiredAuth allowedRoles={[ROLES.Editor]} />}>
-        <Route path="editor" element={<Editor />} />
-      </Route>
+        <Route element={<RequiredAuth allowedRoles={[ROLES.Editor]} />}>
+          <Route path="editor" element={<Editor />} />
+        </Route>
 
-      <Route element={<RequiredAuth allowedRoles={[ROLES.Admin]} />}>
-        <Route path="admin" element={<Admin />} />
-      </Route>
+        <Route element={<RequiredAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route path="admin" element={<Admin />} />
+        </Route>
 
-      <Route
-        element={<RequiredAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
-      >
-        <Route path="lounge" element={<Lounge />} />
+        <Route
+          element={<RequiredAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+        >
+          <Route path="lounge" element={<Lounge />} />
+        </Route>
       </Route>
     </Route>
   )

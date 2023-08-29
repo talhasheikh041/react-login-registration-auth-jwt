@@ -8,7 +8,7 @@ import useAuth from "../hooks/useAuth"
 const LOGIN_URL = "/auth"
 
 const Login = () => {
-  const { setAuth } = useAuth()
+  const { setAuth, persist, setPersist } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -66,6 +66,10 @@ const Login = () => {
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("persist", JSON.stringify(persist))
+  }, [persist])
+
   return (
     <section className="bg-[#1f2937] text-slate-300 p-10 w-96 border border-gray-700 ">
       <p
@@ -115,6 +119,16 @@ const Login = () => {
         <button className="bg-blue-600 mt-8 rounded-lg py-3 text-md font-bold disabled:bg-gray-600 disabled:cursor-not-allowed disabled:text-gray-500">
           Sign In
         </button>
+
+        <div className="flex gap-1 mt-3">
+          <input
+            type="checkbox"
+            id="persist"
+            onChange={() => setPersist((prev) => !prev)}
+            checked={persist}
+          />
+          <label htmlFor="persist">Trust this device</label>
+        </div>
 
         <p className="mt-4 text-sm">
           Need an Account?
