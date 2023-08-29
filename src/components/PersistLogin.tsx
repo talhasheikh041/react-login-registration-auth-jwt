@@ -3,10 +3,12 @@ import { useState, useEffect } from "react"
 import useRefreshToken from "../hooks/useRefreshToken"
 import useAuth from "../hooks/useAuth"
 import { isAxiosError } from "axios"
+import useLocalStorage from "../hooks/useLocalStorage"
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const { auth, persist } = useAuth()
+  const { auth } = useAuth()
+  const [persist] = useLocalStorage("persist", false)
   const refresh = useRefreshToken()
 
   useEffect(() => {

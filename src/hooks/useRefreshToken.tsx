@@ -3,7 +3,7 @@ import useAuth from "./useAuth"
 import { AuthType } from "../context/AuthProvider"
 
 const useRefreshToken = () => {
-  const { setAuth, auth } = useAuth()
+  const { setAuth } = useAuth()
 
   const refresh = async () => {
     const response = await axios.get("/refresh")
