@@ -20,7 +20,6 @@ const Login = () => {
   const userRef = useRef<HTMLInputElement | null>(null)
 
   const [errMsg, setErrMsg] = useState("")
-
   const [user, resetUser, userAttributes] = useInput("user", "") //useState("")
   const [pwd, setPwd] = useState("")
   const [check, toggleCheck] = useToggle("persist", false)
@@ -47,10 +46,8 @@ const Login = () => {
           },
         }
       )
-      console.log(response.data)
       const accessToken: string = response.data.accessToken
-      const roles: number[] = response.data.roles
-      setAuth({ user, pwd, roles, accessToken })
+      setAuth({ user, accessToken })
       resetUser()
       setPwd("")
       navigate(from, { replace: true })

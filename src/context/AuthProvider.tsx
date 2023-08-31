@@ -2,8 +2,6 @@ import { ReactElement, createContext, useState } from "react"
 
 export type AuthType = {
   user: string | undefined
-  pwd: string | undefined
-  roles: number[] | undefined
   accessToken: string | undefined
 }
 
